@@ -30,13 +30,14 @@
 #include"Phase4.h"
 #include"ResourceMarket.h"
 #include"MarketSpace.h"
+#include"PowePlantMarket.h"
 
 int main() {
 	
 	/*-------------------------------Part 1------------------------------------*/
 									//Maps
 
-	cout << "-------------------------------Part 1------------------------------------" << endl;
+	//cout << "-------------------------------Part 1------------------------------------" << endl;
 	/*Creating City Objects*/
 	City memphis("Memphis", 10);
 	City miami("Miami", 10);
@@ -46,7 +47,7 @@ int main() {
 
 	
 
-	/*create a new graph*/
+	///*create a new graph*/
 	int totalVertices = City::cityCount;
 	Map *map;
 	map = Map::createGraph(totalVertices);
@@ -69,21 +70,23 @@ int main() {
 
 	/* print the adjacency list representation of graph */
 	Map::printGraph(map);
-	cout << "------------------------------------------------------------------------\n" << endl;
+
+	Map::BFS(map, boston, miami);
+	//cout << "------------------------------------------------------------------------\n" << endl;
 
 	/*:------------------------------Part 2------------------------------------*/
 								// Map Loader
 
 
 
-	////Valid Test Case
+	//////Valid Test Case
 	//cout << "-------------------------------Part 2------------------------------------" << endl;
-	//string filename = "C:/Users/steve/Desktop/C++ Programming/UsaMap.txt"; //!MAKE SURE IT'S CORRECT PATH!
+	//string filename = "C:/Users/trevt/Desktop/PowerGrid/UsaMap.txt"; //!MAKE SURE IT'S CORRECT PATH!
 	//ifstream file;
 	//file.open(filename);
 	//MapLoader m = MapLoader(); 
-	//Map *map;
-	//map = m.loadMap(file); //loads the map
+	//Map *graph;
+	//graph = m.loadMap(file); //loads the map
 	//cout << "\n----------------------------------\n"<< endl;
 	//Map::printGraph(m.getMap()); //print map
 	//cout << endl;
@@ -356,9 +359,11 @@ int main() {
 	r.display(market);*/
 	//cout << "Here";
 	
+	//PowerPlantMarket p (deck);
+	//p.display();
 
-	Phase4 p4;
-	p4.beginPhase4(map);
+	//Phase4 p4;
+	//p4.beginPhase4(map);
 
 	
 	system("pause");

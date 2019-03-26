@@ -63,11 +63,16 @@ string Player::showCityOwned() {
 
 }
 
+int Player::getCityOwnSize() {
+	return  (int)cityOwned.size();
+}
+
+
+
 //show a list of the cities the player owns
 string Player::showCards() {
-	cout << "Cards: ";
 	for (int i = 0; i < cards.size(); i++) {
-		cout << cards.at(i)->getCardType() << ": "<< cards.at(i)->getCardNum() << "("<< cards.at(i)->getResType() << ", " << cards.at(i)->getResourceNum() << ") -> ";
+		cout << " | [" << cards.at(i)->getCardNum() << ", " << cards.at(i)->getResType() << "(" << cards.at(i)->getResourceNum() << "), " << cards.at(i)->getPowerNum() << "] | -> ";
 	}
 	return "\n";
 
@@ -81,6 +86,7 @@ string Player::showInformation() {
 	//Output for cities owned
 	showCityOwned();
 	cout << endl;
+	cout << "Cards: ";
 	//Output for cities owned
 	showCards();
 
@@ -99,6 +105,31 @@ string Player::showInformation() {
 	return "\n";
 }
 
+void Player::addResource(string res, int num) {
+	if (res=="Coal") {
+		for (int i = 0; i < num; i++) {
+			coal.push_back(res);
+		}
+	}
+
+	if (res == "Oil") {
+		for (int i = 0; i < num; i++) {
+			oil.push_back(res);
+		}
+	}
+
+	if (res == "Garbage") {
+		for (int i = 0; i < num; i++) {
+			garbage.push_back(res);
+		}
+	}
+
+	if (res == "Uranium") {
+		for (int i = 0; i < num; i++) {
+			uranium.push_back(res);
+		}
+	}
+}
 
 //Getters
 string Player::getPlayer() { return name; } //gets player name

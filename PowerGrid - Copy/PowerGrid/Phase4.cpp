@@ -121,7 +121,7 @@ string Phase4::beginPhase4(Map * map)
 		if ((number < 2 || number > 6))
 			cout << "Only numbers 2-6 are acceptable!" << endl;
 
-	} while (number < 2 || number > 6);
+	} while ((number < 2 || number > 6) );
 
 	for (int i = 0; i < number; i++) {
 		cout << "Enter your name player " << i + 1 << ": ";
@@ -175,6 +175,7 @@ string Phase4::beginPhase4(Map * map)
 		houseVector.push_back(yellow);
 	}
 
+	//Testing sample for Phase 3, will be deleted once phase 2 is finished
 	Cards c = deck.drawCard();
 	Cards card2 = deck.drawCard();
 	Cards c3 = deck.drawCard();
@@ -183,6 +184,7 @@ string Phase4::beginPhase4(Map * map)
 	Cards card6 = deck.drawCard();
 	Cards card7 = deck.drawCard();
 
+	/*****************************************************************/
 	players.at(0)->addCard(&c);
 	players.at(0)->addCard(&card2);
 	players.at(0)->addCard(&c3);
@@ -190,104 +192,129 @@ string Phase4::beginPhase4(Map * map)
 	players.at(1)->addCard(&card5);
 	players.at(1)->addCard(&card6);
 	players.at(1)->addCard(&card7);
+	//End of Test sample for Phase 3, will be deleted once phase 2 is finished
+
+
+	//*-------------------------------PHASE 3----------------------------------------*//
+							    //Buying Resources
 
 	cout << "\------------------------------------------------------------------------\n" << endl;
 	cout << "!~ RESOURCE PHASE ~!\n" << endl;
 
-
-	
-
 	//Reverse Player order
 	cout << "For this phase player order is: " << endl;
 
-	//Check For Sufficient Funds
-
-
-
 	//Buy From Resource Market
+
+	//for loop to initialize how much resources a player can buy
 	for (int i = 0; i < players.size(); i++) {
-		vector<Cards*> cards = players.at(i)->getCards();
+		vector<Cards*> cards = players.at(i)->getCards(); //gets the players current cards
+		
+														  												  
+		//Init Resource Vector
 		vector<Cards*> coal;
 		vector<Cards*> oil;
 		vector<Cards*> uranium;
 		vector<Cards*> garbage;
+
+		//Init the number of resources a player can buy
 		int coalNum = 0;
 		int oilNum = 0;
 		int uraniumNum = 0;
 		int garbageNum = 0;
 		
+		//String for yes/no input
 		string yn;
 
+		//adds cards of certain resource to correct vector
 		for (int j = 0; j < cards.size(); j++) {
+			//cards of type coal
 			if (cards.at(j)->getResType() == "Coal") {
 				coal.push_back(cards.at(j));
 			}
+			//Cards of type oil
 			if (cards.at(j)->getResType() == "Oil") {
 				oil.push_back(cards.at(j));
 			}
+			//Cards of type garbage
 			if (cards.at(j)->getResType() == "Garbage") {
 				garbage.push_back(cards.at(j));
 			}
+			//Cards of type Uranium
 			if (cards.at(j)->getResType() == "Uranium") {
 				uranium.push_back(cards.at(j));
 			}
 		}
+		cout << "\------------------------------------------------------------------------\n" << endl;
 
-		cout << "\n" << players.at(i)->getPlayer() << " You have these ";
-		cout << players.at(i)->showCards();
-		cout << "Which means you may store up to this amount of resources: \n";
+		//Displaying the players current cards
+		cout << "\n" << players.at(i)->getPlayer() << " You have these " << players.at(i)->showCards();
 
-		//Display Coal
+		//
+		cout << "\nWhich means you may store up to this amount of resources: \n";
+
+		//Display The amount of coal you can buy from Resource market
 		if (coal.size() > 0) {
 			for (int i = 0; i < coal.size(); i++) {
 				coalNum += coal.at(i)->getResourceNum();
 			}
 			cout << "Coal: " << 2 * coalNum << "\n";
 		}
-		else { cout << "Coal: 0\n"; }
-		//Display Oil
+		else { cout << "Coal: 0\n"; } //If no coal cards, display 0
+
+
+		//Display The amount of oil you can buy from Resource market
 		if (oil.size() > 0) {
 			for (int i = 0; i < oil.size(); i++) {
 				oilNum += oil.at(i)->getResourceNum();
 			}
 			cout << "Oil: " << 2 * oilNum << "\n";
 		}
-		else { cout << "Oil: 0\n"; }
+		else { cout << "Oil: 0\n"; } //If no coal cards, display 0
 
-		//Display Garbage
+		//Display The amount of garbage you can buy from Resource market
 		if (garbage.size() > 0) {
 			for (int i = 0; i < garbage.size(); i++) {
 				garbageNum += garbage.at(i)->getResourceNum();
 			}
 			cout << "Garbage: " << 2 * garbageNum << "\n";
 		}
-		else { cout << "Garbage: 0\n"; }
+		else { cout << "Garbage: 0\n"; } //If no Garbage cards, display 0
 
-		//Display Uranium
+	    //Display The amount of uranium you can buy from Resource market
 		if (uranium.size() > 0) {
 			for (int i = 0; i < uranium.size(); i++) {
 				uraniumNum += uranium.at(i)->getResourceNum();
 			}
 			cout << "Uranium: " << 2 * uraniumNum << "\n";
 		}
-		else { cout << "Uranium: 0\n"; }
+		else { cout << "Uranium: 0\n"; } //If no uranium, display 0
 		cout << "------------------------------------------------------------------------\n" << endl;
+		
+		//Init how much resources player wants to buy
+		int buyCoal = 0;
+		int buyOil = 0;
+		int buyGarbage = 0;
+		int buyUranium = 0;
+		
+		//Init cost of purchases
+		int cost = 0;
 		do {
-			int buyCoal;
-			int buyOil;
-			int buyGarbage;
-			int buyUranium;
 			cout << "Would you like to buy more resources? (y/n)";
 			cin >> yn;
-			int cost = 0;
+			
 			if (yn == "y") {
 				if (coalNum > 0) {
 					do {
+						int input = 0;
 						cout << "How much coal would you like to buy? (#) ";
-						cin >> buyCoal;
-						if (buyCoal <= (2 * coalNum)) {
-							cost += r.buy(buyCoal, "Coal");
-							r.display(market);
+						cin >> input;
+						int c = buyCoal + input;
+						if(c <= (2 * coalNum)){
+							buyCoal += input;
+							cost += r.buy(input, "Coal");
+							players.at(i)->addResource("Coal", input);
+							//r.display(market);
 						}
 						else {
 							cout << "You Can't Store That Much Coal! \n";
@@ -296,12 +323,16 @@ string Phase4::beginPhase4(Map * map)
 				}
 				if (oilNum > 0) {
 					do {
+					int input = 0;
 					cout << "How much oil would you like to buy? (#) ";
-					cin >> buyOil;
+					cin >> input;
+					int c = buyOil + input;
 					
-						if (buyOil <= (2 * oilNum)) {
-							cost = r.buy(buyOil, "Oil");
-							r.display(market);
+						if (c <= (2 * oilNum)) {
+							cost += r.buy(input, "Oil");
+							players.at(i)->addResource("Oil", input);
+
+						//	r.display(market);
 						}
 						else {
 							cout << "You Can't Store That Much Oil! \n";
@@ -310,12 +341,15 @@ string Phase4::beginPhase4(Map * map)
 				}
 				if (garbageNum > 0) {
 					do {
+						int input = 0;
 						cout << "How much garbage would you like to buy? (#) ";
-						cin >> buyGarbage;
+						cin >> input;
+						int c = buyGarbage + input;
 					
-						if (buyGarbage <= (2 * garbageNum)) {
-							cost = r.buy(buyGarbage, "Garbage");
-							r.display(market);
+						if (c <= (2 * garbageNum)) {
+							cost += r.buy(input, "Garbage");
+							players.at(i)->addResource("Garbage", input);
+							//r.display(market);
 						}
 						else {
 							cout << "You Can't Store That Much Garbage! \n";
@@ -324,49 +358,77 @@ string Phase4::beginPhase4(Map * map)
 				}
 				if (uraniumNum > 0) {
 					do {
+						int input = 0;
 						cout << "How much uranium you like to buy? (#) ";
-						cin >> buyUranium;
+						cin >> input;
+						int c = buyUranium + input;
 					
-						if (buyUranium <= (2 * uraniumNum)) {
-							cost = r.buy(buyUranium, "Uranium");
-							r.display(market);
+						if (c <= (2 * uraniumNum)) {
+							cost += r.buy(input, "Uranium");
+							players.at(i)->addResource("Uranium", input);
+
+							//r.display(market);
 						}
 						else {
 							cout << "You Can't Store That Much Uranium! \n";
 						}
 					} while (buyUranium > (2 * uraniumNum));
 				}
+				r.display(market);
 				players.at(i)->getElektro()->subtractElektro(cost);
-
+				cost = 0;
 			}
 		} while (yn == "y");
 			
 	}
 
-
+	//*-------------------------------PHASE 4----------------------------------------*//
+								//Building Phase
 
 	string ans;
-	
 	cout << "------------------------------------------------------------------------\n" << endl;
 	cout << "!~ BUILDING PHASE ~!\n" << endl;
+	int houseId;
+	//Loop to go through each player to ask if they want to build a city
 	for (int i = 0; i < players.size(); i++) {
 		do{
-			cout << "\nPlayer " << i + 1 << " Do you want to place a house?";
+			cout << players.at(i)->getPlayer() << " Do you want to place a house? (y/n)";
 			cin >> ans;
-			if (ans == "yes") {
+			if (ans == "y") {
 				do {
-					cout << "\nPlayer " << i + 1 << " Where do you want to place a house? (City #)";
+					cout << players.at(i)->getPlayer() << " Where do you want to place a house? (City #)";
 					cin >> id;
 				} while (map->isCityFull(id) != false);
-				map->setHouse(id, players.at(i), houseVector.at(i).at(0));
+
+				//loop through houseVector
+				for (int j = 0; j < houseVector.at(i).size(); j++) {
+
+					//Check for empty house to use
+					if (houseVector.at(i).at(j)->isSet()==false) {
+						houseId = j;
+						//Output to show Last house
+						if (j == houseVector.at(i).size()-1) {
+							cout << "Getting to last house";
+						}
+					}
+				}
+				//Set house in the desired city
+				map->setHouse(id, players.at(i), houseVector.at(i).at(houseId));
 				cout << endl;
 			}
-		}while (ans == "yes");
+		}while (ans == "y");
 		cout << "Player ends their building phase";
+		cout << "\n------------------------------------------------------------------------\n" << endl;
 	}
 	cout << "\n------------------------------------------------------------------------\n" << endl;
 	for (int i = 0; i < players.size(); i++) {
 		players.at(i)->showInformation();
 	}
+
+	//*PHASE 5*//
+
+	
+
+
 	return "";
 }

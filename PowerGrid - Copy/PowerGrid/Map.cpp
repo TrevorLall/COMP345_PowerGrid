@@ -9,6 +9,8 @@
 #include "Map.h"
 #include "City.h"
 #include<cstdlib>
+#include"edge.h"
+#include<list>
 #include<iostream>
 
 //Creates the Graph for the map
@@ -32,15 +34,18 @@ void Map::addEdge(Map *map, City& src, City& dest) {
 	//Checks if the connection has already been established. 
 	//If available, create edge
 	if (Map::checkAvailability(map, c1, c2) == true) {
+
 		//Add an edge from src to dest. A new node added to the adjacency list of src
 		//node added at beginning
 		AdjListNode *nptr = AdjListNode::newAdjListNode(dest);
 		nptr->setNext(map->arr[src.getId()].getHead());
 		map->arr[src.getId()].setHead(nptr);
+
 		//connect from dest to src (since undirected)
 		nptr = AdjListNode::newAdjListNode(src);
 		nptr->setNext(map->arr[dest.getId()].getHead());
 		map->arr[dest.getId()].setHead(nptr);
+
 		cout << "edge added between: " << src.getName() << "->" << dest.getName() << "\n";
 	}
 	else {
@@ -49,8 +54,127 @@ void Map::addEdge(Map *map, City& src, City& dest) {
 	
 };
 
+//Add connections between cities
+//void Map::addEdge(Map *map, City& src, City& dest, int cost) {
+//	City * c1 = &src; // Pointer to src city object
+//	City * c2 = &dest; // Pointer to dest city object
+//	int c = cost;
+//
+//	//Checks if the connection has already been established. 
+//	//If available, create edge
+//	if (Map::checkAvailability(map, c1, c2) == true) {
+//
+//		//Add an edge from src to dest. A new node added to the adjacency list of src
+//		//node added at beginning
+//		AdjListNode *nptr = AdjListNode::newAdjListNode(dest);
+//		nptr->setNext(map->arr[src.getId()].getHead());
+//		map->arr[src.getId()].setHead(nptr);
+//		//connect from dest to src (since undirected)
+//		nptr = AdjListNode::newAdjListNode(src);
+//		nptr->setNext(map->arr[dest.getId()].getHead());
+//		map->arr[dest.getId()].setHead(nptr);
+//		cout << "edge added between: " << src.getName() << "->" << dest.getName() << "\n";
+//	}
+//	else {
+//		cout << "";
+//	}
+//
+//};
+
+void Map::BFS(Map* map, City s) {
+	int size = map->V;
+	bool* visited = new bool[size];
+	for (int i = 0; i < size; i++) {
+		visited[i] = false;
+	}
+
+	list<City> queue;
+	AdjListNode *root = map->arr[s.getId()].getHead();
+	// Mark the current node as visited and enqueue it 
+	visited[s.getId()] = true;
+	queue.push_back(s);
+
+	// 'i' will be used to get all adjacent 
+	// vertices of a vertex 
+
+	while (!queue.empty())
+	{
+		// Dequeue a vertex from queue and print it 
+		s = queue.front();
+		cout << s.getName() << " -> ";
+		queue.pop_front();
+
+		// Get all adjacent vertices of the dequeued 
+		// vertex s. If a adjacent has not been visited,  
+		// then mark it visited and enqueue it 
+		
+		
+		AdjListNode *root = map->arr[s.getId()].getHead();
+		////Check if it's the end of the list
+		while (root != NULL) {
+			int id = root->getData()->getId();
+			if (!visited[id]) {
+				visited[id] = true;
+				queue.push_back(*root->getData());
+			}
+			root = root->getNext();
+
+		}
+	}
+}
+
+
+void Map::BFS(Map* map, City src, City dest) {
+	int size = map->V;
+	bool* visited = new bool[size];
+	for (int i = 0; i < size; i++) {
+		visited[i] = false;
+	}
+
+	list<City> queue;
+	AdjListNode *root = map->arr[src.getId()].getHead();
+	// Mark the current node as visited and enqueue it 
+	visited[src.getId()] = true;
+	queue.push_back(src);
+
+	// 'i' will be used to get all adjacent 
+	// vertices of a vertex 
+
+	while (!queue.empty())
+	{
+		// Dequeue a vertex from queue and print it 
+		src = queue.front();
+		cout << src.getName() << " -> ";
+		queue.pop_front();
+
+		// Get all adjacent vertices of the dequeued 
+		// vertex s. If a adjacent has not been visited,  
+		// then mark it visited and enqueue it 
+
+
+		AdjListNode *root = map->arr[src.getId()].getHead();
+		////Check if it's the end of the list
+		while (root != NULL) {
+			int id = root->getData()->getId();
+			if (id == dest.getId()) {
+				cout << dest.getName() << endl;
+				cout << "Search Complete\n";
+				return;
+			}
+			if (!visited[id]) {
+				visited[id] = true;
+				queue.push_back(*root->getData());
+			}
+			root = root->getNext();
+
+		}
+	}
+}
+
 //Checks if edges have already been created between cities
 bool Map::checkAvailability(Map *map, City* city1, City *city2) {
+
+
 	AdjListNode *root = map->arr[city1->getId()].getHead(); //Get the head of city1
 	
 	//Cycle through root
@@ -154,7 +278,9 @@ bool Map::isCityFull(int id) {
 	}
 };
 
+void Map::getAdjListSize(Map* m, int id) {
 
+}
 
 //Set house to a city
 void Map::setHouse(City & city, House * house) {

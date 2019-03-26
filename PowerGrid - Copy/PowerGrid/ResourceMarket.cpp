@@ -16,9 +16,9 @@ ResourceMarket::ResourceMarket()
 			market.push_back(new MarketSpace(i + 1, 3, 3, 3, 0));
 		}
 		else if (i == 8)
-			market.push_back(new MarketSpace(i + 2, 1));
+			market.push_back(new MarketSpace(i + 2, 0));
 		else if (i == 9)
-			market.push_back(new MarketSpace(i + 3, 1));
+			market.push_back(new MarketSpace(i + 3, 0));
 		else if (i == 10)
 			market.push_back(new MarketSpace(i + 4, 1));
 		else if (i ==11)
@@ -42,7 +42,6 @@ int ResourceMarket::buy(int num, string resource){
 		for (int i = 0; i < market.size(); i++) {
 			int j = 0;
 			while (j < market.at(i)->getCoal().size() && count < num) {
-				cout << "Bought\n";
 				j++;
 				count++;
 				price += market.at(i)->getCost();
@@ -54,7 +53,6 @@ int ResourceMarket::buy(int num, string resource){
 		for (int i = 0; i < market.size(); i++) {
 			int j = 0;
 			while (j < market.at(i)->getOil().size() && count < num) {
-				cout << "Bought\n";
 				j++;
 				count++;
 				price += market.at(i)->getCost();
@@ -67,7 +65,6 @@ int ResourceMarket::buy(int num, string resource){
 		for (int i = 0; i < market.size(); i++) {
 			int j = 0;
 			while (j < market.at(i)->getGarbage().size() && count < num) {
-				cout << "Bought\n";
 				j++;
 				count++;
 				price += market.at(i)->getCost();
@@ -80,7 +77,6 @@ int ResourceMarket::buy(int num, string resource){
 		for (int i = 0; i < market.size(); i++) {
 			int j = 0;
 			while (j < market.at(i)->getUranium().size() && count < num) {
-				cout << "Bought\n";
 				j++;
 				count++;
 				price += market.at(i)->getCost();
@@ -96,6 +92,7 @@ int ResourceMarket::buy(int num, string resource){
 }
 
 string ResourceMarket::display(vector<MarketSpace*> market){
+	cout << "\n------------------------------------------------------------------------\n";
 	cout << "RESOURCE MARKET\n";
 	for (int i = 0; i < market.size(); i++) {
 		
@@ -157,5 +154,6 @@ string ResourceMarket::display(vector<MarketSpace*> market){
 		}
 		cout << "\n";
 	}
+	cout << "------------------------------------------------------------------------\n" << endl;
 	return"";
 }

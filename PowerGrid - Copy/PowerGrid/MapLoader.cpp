@@ -85,6 +85,7 @@ Map* MapLoader::loadMap(std::ifstream& file) {
 	cout <<  "\n----------------------------------\n";
 	Map::printGraph(graph); //Print the Map
 	cout << endl;
+	Map::BFS(graph, city.at(0));
 	return graph; //Return Map
 }
 

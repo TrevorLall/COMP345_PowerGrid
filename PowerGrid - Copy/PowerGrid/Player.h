@@ -51,8 +51,11 @@ public:
 	vector<string> coal; //players controlled coal objects
 
 	string showCityOwned(); //Shows the controlled cities
+	int getCityOwnSize();
 	string showCards();
 	string showInformation(); //shows all player information
+
+	void addResource(string res, int num);
 
 private:
 	string name; //player name

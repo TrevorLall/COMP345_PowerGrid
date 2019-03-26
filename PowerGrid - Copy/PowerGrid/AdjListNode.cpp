@@ -14,7 +14,7 @@ using namespace std;
 
 //Creates a new city node from a city object
 AdjListNode *AdjListNode::newAdjListNode(City& data){
-	City* city_ptr = new City(data.getName(), data.getCost()); // creates a pointers to a city object
+	City* city_ptr = new City(data.getId(),  data.getName(), data.getCost()); // creates a pointers to a city object
 	AdjListNode *nptr = new AdjListNode; 
 	nptr->data = city_ptr; //set pointer of data to city pointer
 	nptr->next = NULL; //instantiates pointer of next to NULL
