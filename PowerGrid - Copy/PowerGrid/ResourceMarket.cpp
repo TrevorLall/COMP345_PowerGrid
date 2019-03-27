@@ -1,4 +1,5 @@
 #include "ResourceMarket.h"
+#include "Player.h"
 #include <iostream>
 using namespace std;
 //Cost, Coal, Oil, Garbage, Uranium
@@ -33,6 +34,49 @@ ResourceMarket::~ResourceMarket()
 vector<MarketSpace*> ResourceMarket::getMarket()
 {
 	return market;
+}
+
+void ResourceMarket::reSupply(vector<Player*> players, int player_number) {
+	int count = 0;
+	
+	switch (player_number) {
+		case 2: {
+			for (int i = 0; i < market.size(); i++) {
+				int j = 0;
+				while (market.at(i)->getCoal().size() < 3 && count < 3 ) {
+					market.at(i)->setCoal(1);	
+					count++;
+				}
+
+				while (market.at(i)->getOil().size() < 3 && count < 3) {
+					market.at(i)->setOil(1);
+				}
+
+				while (market.at(i)->getGarbage.size() < 3 && count < 3) {
+					market.at(i)->setGarbage(1);
+				}
+
+				while (market.at(i)->getUranium.size() < 3 && count < 3) {
+					market.at(i)->setUranium(1);
+				}
+
+				j++;
+			}
+			break;
+		}
+		case 3: {
+			break;
+		}
+		case 4: {
+			break;
+		}
+		case 5: {
+			break;
+		}
+		case 6: {
+			break;
+		}
+	}
 }
 
 int ResourceMarket::buy(int num, string resource){

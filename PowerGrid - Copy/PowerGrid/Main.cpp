@@ -31,6 +31,7 @@
 #include"ResourceMarket.h"
 #include"MarketSpace.h"
 #include"PowePlantMarket.h"
+#include"PowerGrid.h"
 
 int main() {
 	
@@ -39,13 +40,13 @@ int main() {
 
 	//cout << "-------------------------------Part 1------------------------------------" << endl;
 	/////*Creating City Objects*/
-	//City memphis("Memphis", 10);
-	//City miami("Miami", 10);
-	//City ny("New york", 10);
-	//City philly("Phillidelphia", 10);
-	//City boston("Boston", 10);
-
-	//
+	/*City memphis("Memphis", 10);
+	City miami("Miami", 10);
+	City ny("New york", 10);
+	City philly("Phillidelphia", 10);
+	City boston("Boston", 10);
+*/
+	
 
 	/////*create a new graph*/
 	//int totalVertices = City::cityCount;
@@ -53,12 +54,12 @@ int main() {
 	//map = Map::createGraph(totalVertices);
 
 	///*connect edges to the map*/
-	//Map::addEdge(map, memphis, miami, 12);
-	//Map::addEdge(map, memphis, ny, 13);
-	//Map::addEdge(map, memphis, philly, 14);
-	//Map::addEdge(map, boston, memphis, 15);
-	//Map::addEdge(map, miami, philly, 16);
-	//Map::addEdge(map, ny, philly, 19);
+	//Map::addEdge(map, memphis, miami, 5);
+	//Map::addEdge(map, memphis, ny, 3);
+	//Map::addEdge(map, memphis, philly, 4);
+	//Map::addEdge(map, boston, memphis, 6);
+	//Map::addEdge(map, miami, philly, 7);
+	//Map::addEdge(map, ny, philly, 1);
 	//cout << "------------------------------------------------------------------------\n" << endl;
 	//cout << "!~ GAME MAP ~!\n" << endl;
 	///*Add Cities as the head node on the connected map*/
@@ -82,13 +83,13 @@ int main() {
 
 	//////Valid Test Case
 	//cout << "-------------------------------Part 2------------------------------------" << endl;
-	string filename = "C:/Users/t_lall/Desktop/PowerGrid/UsaMap.txt"; //!MAKE SURE IT'S CORRECT PATH!
-	ifstream file;
-	file.open(filename);
-	MapLoader m = MapLoader(); 
-	Map *graph;
-	graph = m.loadMap(file); //loads the map
-	cout << "\n----------------------------------\n"<< endl;
+	//string filename = "C:/Users/t_lall/Desktop/PowerGrid/UsaMap.txt"; //!MAKE SURE IT'S CORRECT PATH!
+	//ifstream file;
+	//file.open(filename);
+	//MapLoader m = MapLoader(); 
+	//Map *graph;
+	//graph = m.loadMap(file); //loads the map
+	//cout << "\n----------------------------------\n"<< endl;
 	//Map::printGraph(m.getMap()); //print map
 	//cout << endl;
 
@@ -363,9 +364,11 @@ int main() {
 	PowerPlantMarket p (deck);
 	p.display();
 
-	Phase4 p4;
-	p4.beginPhase4(graph);
+	//Phase4 p4;
+	//p4.beginPhase4(map);
 
+	PowerGrid pg;
+	pg.startGame();
 	
 	system("pause");
 	return 0;

@@ -28,11 +28,17 @@ void Elektro::setPlayerMoney(int amount) {
 //Add money to player amount
 void Elektro::addElektro(int amount) {
 	player_money += amount;
+	cout << "Player added " << amount << " to their wallet!\n";
 }
 
 //Subtract money from player amount
 void Elektro::subtractElektro(int amount) {
-	player_money -= amount;
+	if (player_money < amount) {
+		cout << "Player Doesn't have that much money! Player's current balance is : " << player_money << endl;
+	}
+	else {
+		player_money -= amount;
+	}
 }
 
 //Get player money

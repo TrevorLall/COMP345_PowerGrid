@@ -28,7 +28,7 @@ private:
 	bool isFull; // boolean if the city is full
 	Player* player; //stores player that owns city
 	House* house; //stores house on city map
-
+	string area;
 public:
 	//Constructors
 	City(string name, int cost);
@@ -53,7 +53,10 @@ public:
 	static int cityCount; 	//The number of city objects that have been created
 
 	int count; //Accessor for cityCount in constructor
-	int id; //Id of a given city
+	int id;
+	void setArea(string newArea);
+	string getArea();
+	//Id of a given city
 };
 
 

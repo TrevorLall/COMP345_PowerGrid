@@ -63,9 +63,6 @@ string Player::showCityOwned() {
 
 }
 
-int Player::getCityOwnSize() {
-	return  (int)cityOwned.size();
-}
 
 
 

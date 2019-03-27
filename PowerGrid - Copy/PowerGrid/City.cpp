@@ -99,6 +99,15 @@ void City::setHouse(House* houses, int id) {
 
 
 
+void City::setArea(string newArea)
+{
+	area = newArea;
+}
+
+string City::getArea()
+{
+	return area;
+}
 
 
 //getters
