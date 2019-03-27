@@ -15,12 +15,11 @@ MapLoader::MapLoader() {
 }
 
 // Function used to load a map file from a given text file
-Map* MapLoader::loadMap(ifstream& file) {
-	string line1 = ""; //stores Original City name
-	string line2 = ""; //Stores Original city region color
-	string line3 = ""; //Stores string of connections to original city
+Map* MapLoader::loadMap(std::ifstream& file) {
+	std::string line1 = ""; //stores Original City name
+	std::string line2 = ""; //Stores string of connections to original city
 
-	vector<string> edges; //Vector to store names of edges to city
+	vector<std::string> edges; //Vector to store names of edges to city
 	vector<int> iter; //Vector that stores how many edges are for a given city
 	iter.push_back(0); 
 	
@@ -37,24 +36,22 @@ Map* MapLoader::loadMap(ifstream& file) {
 
 				//Gets line in textfile
 				//Line 1 searches until ':' is found. Represents city to create
-				//Line 2 searches until ',' is found. Represents city's color
-				//Line 3 searches until the end of the line. Represents the edges
-				while (getline(file, line1, ':')  && getline(file, line2, '\n')) {
+				//Line 2 searches until the end of the line. Represents the edges
+				while (getline(file, line1, ':') && getline(file, line2, '\n')) {
 					string s; //temp string
-					
-					city.push_back(new City(line1, 10)); //Create City from Line1 
+
+					city.push_back(new City(line1, 10)); //Create City from Line1
 					std::istringstream iss(line2); //Parse the line2
-					while (getline(iss, s, ',')){
+					while (getline(iss, s, '-')){
 						edges.push_back(s); //Add edges to a vector
 					}
 					iter.push_back(edges.size()); //Store the number of edges are created per loop
-					
 				}
 			}
 		}
 	}
 	else {
-		std::cout << "Error.Incorrect file name or file is closed!" << endl; // Output If file isn't open
+		std::cout << "File is closed!" << endl; // Output If file isn't open
 		system("pause");
 		exit(0);
 
@@ -73,10 +70,13 @@ Map* MapLoader::loadMap(ifstream& file) {
 		//Loops through the number of edges per city
 		for (int j = 0; j < length; j++) {
 
+			int random = (rand() % 10) + 1;
+
+
 			//If the city name is an actual already created city, then add connection to original city
 			if (isACity(edges.at(j + iter.at(i)))) {
 				City cityId = *returnCity(edges.at(j + iter.at(i))); //Gets City Object for the original city
-				Map::addEdge(graph, *city.at(i), cityId); //Creates connection
+				Map::addEdge(graph, *city.at(i), cityId, random); //Creates connection
 			}
 		}
 	}
@@ -88,9 +88,7 @@ Map* MapLoader::loadMap(ifstream& file) {
 	cout <<  "\n----------------------------------\n";
 	Map::printGraph(graph); //Print the Map
 	cout << endl;
-
-	this->graph = graph;
-
+	Map::BFS(graph, *city.at(0));
 	return graph; //Return Map
 }
 
@@ -99,36 +97,27 @@ Map* MapLoader::getMap() {
 	return graph;
 }
 
-vector<City*> MapLoader::getCity()
-{
-	return city;
-}
-
 //Boolean: Returns true if the city exists, false if it does not
-bool MapLoader::isACity( string s)
-{
-	bool isCity = false;
-
-	for (int i = 0; i < city.size(); i++)
-	{
-		if (city.at(i)->getName() == s)
-		{
-			isCity = true;
+bool MapLoader::isACity( string s) {
+	for (int i = 0; i < city.size(); i++) {
+		if (city.at(i)->getName() == s) {
+			return true;
 		}
 	}
-
-	return isCity;
+	return false;
 }
 
 //Returns a city from a given string name
-City* MapLoader::returnCity(string s)
-{
+City* MapLoader::returnCity(string s) {
 	//loop through city vector to find if the city name exists, and return that city
-	for (int i = 0; i < city.size(); i++)
-	{
-		if (city.at(i)->getName() == s) 
-		{
+	for (int i = 0; i < city.size(); i++) {
+		if (city.at(i)->getName() == s) {
 			return city.at(i);
 		}
 	}
+}
+
+vector<City*> MapLoader::getCity()
+{
+	return city;
 }
