@@ -34,7 +34,7 @@ void Player::setPlayer(string Pname){
 
 //set the players money
 void Player::setElektro(int money_spent) {
-	elektro->setPlayerMoney(money_spent);
+	elektro->setAmount(money_spent);
 }
 
 void Player::setColour(string colours){
@@ -63,16 +63,11 @@ string Player::showCityOwned() {
 
 }
 
-int Player::getCityOwnSize() {
-	return  (int)cityOwned.size();
-}
-
-
-
 //show a list of the cities the player owns
 string Player::showCards() {
+	cout << "Cards: ";
 	for (int i = 0; i < cards.size(); i++) {
-		cout << " | [" << cards.at(i)->getCardNum() << ", " << cards.at(i)->getResType() << "(" << cards.at(i)->getResourceNum() << "), " << cards.at(i)->getPowerNum() << "] | -> ";
+		cout << cards.at(i)->getCardNum() << ": "<< cards.at(i)->getCardNum() << "("<< cards.at(i)->getPowerNum() << ", " << cards.at(i)->getResourceNum() << ") -> ";
 	}
 	return "\n";
 
@@ -85,13 +80,12 @@ string Player::showInformation() {
 
 	//Output for cities owned
 	showCityOwned();
-	cout << endl;
-	cout << "Cards: ";
+
 	//Output for cities owned
 	showCards();
 
 	//output for Money
-	cout << "\nElektro: " << getElektro()->getPlayerMoney() << endl ;
+	cout << "\nElektro: " << getElektro()->getAmount() << endl ;
 	
 	//Outout for Resources
 	cout << 
@@ -105,31 +99,6 @@ string Player::showInformation() {
 	return "\n";
 }
 
-void Player::addResource(string res, int num) {
-	if (res=="Coal") {
-		for (int i = 0; i < num; i++) {
-			coal.push_back(res);
-		}
-	}
-
-	if (res == "Oil") {
-		for (int i = 0; i < num; i++) {
-			oil.push_back(res);
-		}
-	}
-
-	if (res == "Garbage") {
-		for (int i = 0; i < num; i++) {
-			garbage.push_back(res);
-		}
-	}
-
-	if (res == "Uranium") {
-		for (int i = 0; i < num; i++) {
-			uranium.push_back(res);
-		}
-	}
-}
 
 //Getters
 string Player::getPlayer() { return name; } //gets player name
@@ -137,6 +106,12 @@ int Player::getPlayerNum() { return player_num; } //gets player number
 Elektro* Player::getElektro() { return elektro; } //gets Money
 vector<House*> Player:: getHouse() { return houses; }
 vector<Cards*> Player::getCards() { return cards; }
+int Player::getCityOwned(){return (int)cityOwned.size();}
+int Player::getMaximumNumofCard()
+{
+	return 0;
+}
+//return city size
 
 string Player::getPlayerColour(){
 	return colour;

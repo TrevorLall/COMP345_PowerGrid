@@ -45,17 +45,17 @@ public:
 
 	vector<Cards*> getCards();
 
+	int getCityOwned();
+	int getMaximumNumofCard();
+
 	vector<string> uranium;//player controlled uranium objects
 	vector<string> oil; //player controlled oil objects
 	vector<string> garbage; //player controlled garbage objects
 	vector<string> coal; //players controlled coal objects
 
 	string showCityOwned(); //Shows the controlled cities
-	int getCityOwnSize();
 	string showCards();
 	string showInformation(); //shows all player information
-
-	void addResource(string res, int num);
 
 private:
 	string name; //player name
