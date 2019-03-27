@@ -2,7 +2,7 @@
 #include "Cards.h"
 #include "Deck.h"
 #include<iostream>
-#include <vector>
+#include <list>
 
 using namespace std;
 

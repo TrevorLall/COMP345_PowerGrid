@@ -2,7 +2,7 @@
 #include"ResourceMarket.h"
 #include<iostream>
 #include<vector>
-
+#include"PlayerOrderDetermine.h"
 using namespace std;
 
 Phase4::Phase4()
@@ -15,7 +15,8 @@ string Phase4::beginPhase4(Map * map)
 	ResourceMarket r;
 	vector<MarketSpace*> market = r.getMarket();
 	r.display(market);
-
+	int n=r.getMarket().at(0)->getCoal().size();
+	cout << "Coal in market 0: " << n << endl;
 	/* Creating 42 Power Plant Cards + Step 3 Card */
 	Cards step3(0, "", 0, 0, "Step3"); //step 2
 
@@ -175,6 +176,13 @@ string Phase4::beginPhase4(Map * map)
 		houseVector.push_back(yellow);
 	}
 
+	cout << "\------------------------------------------------------------------------\n" << endl;
+	cout << "!~ PHASE 2 ~!\n" << endl;
+
+	PlayerOrderDetermine p;
+	players = p.DetermineOrder(players);
+	p.display(players);
+
 	//Testing sample for Phase 3, will be deleted once phase 2 is finished
 	Cards c = deck.drawCard();
 	Cards card2 = deck.drawCard();
@@ -184,15 +192,17 @@ string Phase4::beginPhase4(Map * map)
 	Cards card6 = deck.drawCard();
 	Cards card7 = deck.drawCard();
 
+
 	/*****************************************************************/
 	players.at(0)->addCard(&c);
 	players.at(0)->addCard(&card2);
-	players.at(0)->addCard(&c3);
+	players.at(1)->addCard(&c3);
 	players.at(1)->addCard(&card4);
 	players.at(1)->addCard(&card5);
 	players.at(1)->addCard(&card6);
-	players.at(1)->addCard(&card7);
+	players.at(0)->addCard(&card7);
 	//End of Test sample for Phase 3, will be deleted once phase 2 is finished
+
 
 
 	//*-------------------------------PHASE 3----------------------------------------*//
@@ -203,6 +213,8 @@ string Phase4::beginPhase4(Map * map)
 
 	//Reverse Player order
 	cout << "For this phase player order is: " << endl;
+	players = p.reverseOrder(players);
+	p.display(players);
 
 	//Buy From Resource Market
 
@@ -388,6 +400,9 @@ string Phase4::beginPhase4(Map * map)
 	string ans;
 	cout << "------------------------------------------------------------------------\n" << endl;
 	cout << "!~ BUILDING PHASE ~!\n" << endl;
+
+	//vector<City*> vcity = Map::getCityVector(map);
+	//map->displayCityVector(vcity);
 	int houseId;
 	//Loop to go through each player to ask if they want to build a city
 	for (int i = 0; i < players.size(); i++) {
@@ -408,13 +423,31 @@ string Phase4::beginPhase4(Map * map)
 						houseId = j;
 						//Output to show Last house
 						if (j == houseVector.at(i).size()-1) {
-							cout << "Getting to last house";
+							cout << "Getting to last house\n";
 						}
+						break;
 					}
 				}
 				//Set house in the desired city
-				map->setHouse(id, players.at(i), houseVector.at(i).at(houseId));
-				cout << endl;
+				if (houseId == 0) {
+					map->setHouse(id, players.at(i), houseVector.at(i).at(houseId));
+					cout << endl;
+				}
+				else {
+					City temp = map->returnCityFromId(map, houseVector.at(i).at(houseId-1)->getCityId());
+					City temp2 = map->returnCityFromId(map, id);
+					int costToConnect = Map::BFS(map, temp, temp2);
+					if (players.at(i)->getElektro()->getPlayerMoney() < costToConnect) {
+						cout << players.at(i)->getPlayer() << " Doesn't have enough Elektro to pay the "<< costToConnect  <<" Elektro connection fee to " << temp2.getName() <<"! \n\n";
+					}
+					else {
+						map->setHouse(id, players.at(i), houseVector.at(i).at(houseId));
+						players.at(i)->getElektro()->subtractElektro(costToConnect);
+						cout << players.at(i)->getPlayer() << " Paid " << costToConnect << " Elektro in connection fees \n";
+						cout << endl;
+					}
+					
+				}
 			}
 		}while (ans == "y");
 		cout << "Player ends their building phase";
@@ -424,10 +457,107 @@ string Phase4::beginPhase4(Map * map)
 	for (int i = 0; i < players.size(); i++) {
 		players.at(i)->showInformation();
 	}
+	
 
 	//*PHASE 5*//
 
-	
+
+	////phase5
+
+	////giving money to players 
+
+	//for (int i = 0; i < players.size(); i++)
+	//{
+	//	int j = players.at(i).getCityOwnSize();
+	//	switch (j)
+	//	{
+	//	case 0: {
+	//		int amount = 10 + players.at(i)->getElektro()->getPlayerMoney();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 1: {
+	//		int amount = 22 + players.at(i)->getElektro()->getPlayerMoney();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 2: {
+	//		int amount = 33 + players.at(i)->getElektro()->getPlayerMoney();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 3: {
+	//		int amount = 44 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 4: {
+	//		int amount = 54 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 5: {
+	//		int amount = 64 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 6: {
+	//		int amount = 73 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 7: {
+	//		int amount = 82 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 8: {
+	//		int amount = 90 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 9: {
+	//		int amount = 98 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 10: {
+	//		int amount = 105 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+
+	//	case 11: {
+	//		int amount = 112 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 12: {
+	//		int amount = 118 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 13: {
+	//		int amount = 124 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 14: {
+	//		int amount = 129 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 15: {
+	//		int amount = 134 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 16: {
+	//		int amount = 138 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 17: {
+	//		int amount = 142 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 18: {
+	//		int amount = 145 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 19: {
+	//		int amount = 148 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+	//	case 20: {
+	//		int amount = 150 + players.at(i).getElektro();
+	//		players.at(i).setElektro(amount); break; }
+
+
+	//	}
+
+	//}
+
+
+	//for (int i = 0; i < players.size(); i++)
+	//{
+	//	cout << "Player " << i << " : " << players.at(i).getEleltro();
+	//}
+
+	//
+	////Cards card = deck->drawCard();
+	////powerMarket.push_back(card);
+
+	//// showing players possesion of all the things
+	//for (int i = 0; i < players.size(); i++)
+	//{
+	//	players.at(i).showInformation();
+	//	cout << endl;
+	//}
+	//
 
 
 	return "";

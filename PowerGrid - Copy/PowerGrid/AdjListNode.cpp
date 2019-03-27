@@ -21,6 +21,16 @@ AdjListNode *AdjListNode::newAdjListNode(City& data){
 	return nptr;
 }
 
+AdjListNode *AdjListNode::newAdjListNode(City& data, int cost) {
+	City* city_ptr = new City(data.getId(), data.getName(), data.getCost()); // creates a pointers to a city object
+	AdjListNode *nptr = new AdjListNode;
+	nptr->connectionCost = cost;
+	nptr->data = city_ptr; //set pointer of data to city pointer
+	nptr->next = NULL; //instantiates pointer of next to NULL
+
+	return nptr;
+}
+
 // Return data of city node
 City* AdjListNode::getData() {
 	return data;
@@ -35,3 +45,7 @@ AdjListNode *AdjListNode::getNext() {
 void AdjListNode::setNext(AdjListNode *head) {
 	next = head;
 };
+
+int AdjListNode::getCost() {
+	return connectionCost;
+}

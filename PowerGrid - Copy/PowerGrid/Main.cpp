@@ -30,188 +30,188 @@
 #include"Phase4.h"
 #include"ResourceMarket.h"
 #include"MarketSpace.h"
-#include"PlayerOrderDetermine.h"
-
+#include"PowePlantMarket.h"
 
 int main() {
 	
 	/*-------------------------------Part 1------------------------------------*/
 									//Maps
 
-	cout << "-------------------------------Part 1------------------------------------" << endl;
-	/*Creating City Objects*/
-	City memphis("Memphis", 10);
-	City miami("Miami", 10);
-	City ny("New york", 10);
-	City philly("Phillidelphia", 10);
-	City boston("Boston", 10);
+	//cout << "-------------------------------Part 1------------------------------------" << endl;
+	/////*Creating City Objects*/
+	//City memphis("Memphis", 10);
+	//City miami("Miami", 10);
+	//City ny("New york", 10);
+	//City philly("Phillidelphia", 10);
+	//City boston("Boston", 10);
 
-	
+	//
 
-	/*create a new graph*/
-	int totalVertices = City::cityCount;
-	Map *map;
-	map = Map::createGraph(totalVertices);
-
-	/*connect edges to the map*/
-	Map::addEdge(map, memphis, miami);
-	Map::addEdge(map, memphis, ny);
-	Map::addEdge(map, memphis, philly);
-	Map::addEdge(map, boston, memphis);
-	Map::addEdge(map, miami, philly);
-	Map::addEdge(map, ny, philly);
-	cout << "------------------------------------------------------------------------\n" << endl;
-	cout << "!~ GAME MAP ~!\n" << endl;
-	/*Add Cities as the head node on the connected map*/
-	Map::addCity(map, memphis);
-	Map::addCity(map, miami);
-	Map::addCity(map, ny);
-	Map::addCity(map, philly);
-	Map::addCity(map, boston);
-
-	/* print the adjacency list representation of graph */
-	Map::printGraph(map);
-	cout << "------------------------------------------------------------------------\n" << endl;
-
-//	/*:------------------------------Part 2------------------------------------*/
-//								// Map Loader
-//
-//
-//
-	////Valid Test Case
-	//cout << "-------------------------------Part 2------------------------------------" << endl;
-	//string filename = "C:/Users/steve/Desktop/C++ Programming/UsaMap.txt"; //!MAKE SURE IT'S CORRECT PATH!
-	//ifstream file;
-	//file.open(filename);
-	//MapLoader m = MapLoader(); 
+	/////*create a new graph*/
+	//int totalVertices = City::cityCount;
 	//Map *map;
-	//map = m.loadMap(file); //loads the map
-	//cout << "\n----------------------------------\n"<< endl;
+	//map = Map::createGraph(totalVertices);
+
+	///*connect edges to the map*/
+	//Map::addEdge(map, memphis, miami, 12);
+	//Map::addEdge(map, memphis, ny, 13);
+	//Map::addEdge(map, memphis, philly, 14);
+	//Map::addEdge(map, boston, memphis, 15);
+	//Map::addEdge(map, miami, philly, 16);
+	//Map::addEdge(map, ny, philly, 19);
+	//cout << "------------------------------------------------------------------------\n" << endl;
+	//cout << "!~ GAME MAP ~!\n" << endl;
+	///*Add Cities as the head node on the connected map*/
+	//Map::addCity(map, memphis);
+	//Map::addCity(map, miami);
+	//Map::addCity(map, ny);
+	//Map::addCity(map, philly);
+	//Map::addCity(map, boston);
+
+	///* print the adjacency list representation of graph */
+	//Map::printGraph(map);
+
+	//int cost = Map::BFS(map, boston, miami);
+	//cout << "Cost to travel from boston to miami is " << cost << endl;
+	//cout << "------------------------------------------------------------------------\n" << endl;
+
+	/*:------------------------------Part 2------------------------------------*/
+								// Map Loader
+
+
+
+	//////Valid Test Case
+	//cout << "-------------------------------Part 2------------------------------------" << endl;
+	string filename = "C:/Users/t_lall/Desktop/PowerGrid/UsaMap.txt"; //!MAKE SURE IT'S CORRECT PATH!
+	ifstream file;
+	file.open(filename);
+	MapLoader m = MapLoader(); 
+	Map *graph;
+	graph = m.loadMap(file); //loads the map
+	cout << "\n----------------------------------\n"<< endl;
 	//Map::printGraph(m.getMap()); //print map
 	//cout << endl;
-//
-//	 ////Invalid Test Case
-//	//filename = "C:/Users/steve/Desktop/C++ Programming/Empty.txt"; //!MAKE SURE IT'S CORRECT PATH!
-//	//ifstream file;
-//	//file.open(filename);
-//	//MapLoader m = MapLoader();
-//	//Map *map;
-//	//map = m.loadMap(file);
-//
-//
-//	/*:------------------------------Part 3------------------------------------*/
-//							//Houses - Resources - Money
-//
-//	
-	/*Create player Wallet*/
-	Elektro* wallet1 = new Elektro();
-	Elektro* wallet2 = new Elektro();
-	Elektro* wallet3 = new Elektro();
-	Elektro* wallet4 = new Elektro();
-//
-//
-	/*Initialization of Resource objects */
 
-	//12 Uranium Objects
-	vector <Uranium*> uranium;
-	for (int i = 0; i < 12; i++)
-		uranium.push_back(new Uranium());
-
-	//24 Garbage objects
-	vector <Garbage*> garbage;
-	for (int i = 0; i < 24; i++)
-		garbage.push_back(new Garbage());
-
-	//24 Oil Objects
-	vector <Oil*> oil;
-	for (int i = 0; i < 24; i++)
-		oil.push_back(new Oil());
-
-	//24 Coal objects
-	vector <Coal*> coal;
-	for (int i = 0; i < 24; i++)
-		coal.push_back(new Coal());
+	 ////Invalid Test Case
+	//filename = "C:/Users/steve/Desktop/C++ Programming/Empty.txt"; //!MAKE SURE IT'S CORRECT PATH!
+	//ifstream file;
+	//file.open(filename);
+	//MapLoader m = MapLoader();
+	//Map *map;
+	//map = m.loadMap(file);
 
 
-	/* Creating Player House Objects*/
-	vector <House*> black;
-	for (int i = 0; i < 22; i++)
-		black.push_back(new House("BLACK"));
+	/*:------------------------------Part 3------------------------------------*/
+							//Houses - Resources - Money
 
-	vector <House*> purple;
-	for (int i = 0; i < 22; i++)
-		purple.push_back(new House("PURPLE"));
+	
+	///*Create player Wallet*/
+	//Elektro* wallet1 = new Elektro();
+	//Elektro* wallet2 = new Elektro();
+	//Elektro* wallet3 = new Elektro();
+	//Elektro* wallet4 = new Elektro();
 
 
-//	///*:------------------------------Part 4------------------------------------*/
-//	//							//Player Objects
-//
-	/*Creating Players*/
-	Player* player1 = new Player(1, "Trevor", wallet1, "ReD");
-	Player* player2 = new Player(2, "Stephen", wallet2, "GREEN");
-	Player* player3 = new Player(3, "Avnish", wallet3, "YELLOW");
-	Player* player4 = new Player(4, "Wenbo", wallet4, "BLUE");
-//
-//	/*Shows you can set player to map*/
-//	map->setPlayer(miami, player1);
-//	map->setPlayer(philly, player2);
-//	map->setPlayer(boston, player3);
-//	map->setPlayer(memphis, player4);
-////
-	/*Sets resources to players*/
-	uranium[0]->setOwner(player1);
-	uranium[1]->setOwner(player2);
-	uranium[2]->setOwner(player3);
-	garbage[0]->setOwner(player4);
+	///*Initialization of Resource objects */
 
-//
-	/*Creating the rest of the house Objects*/
-	vector <House*> red;
-	for (int i = 0; i < 22; i++)
-		red.push_back(new House("RED", player1));
+	////12 Uranium Objects
+	//vector <Uranium*> uranium;
+	//for (int i = 0; i < 12; i++)
+	//	uranium.push_back(new Uranium());
 
-	vector <House*> green;
-	for (int i = 0; i < 1; i++)
-		green.push_back(new House("GREEN", player2));
+	////24 Garbage objects
+	//vector <Garbage*> garbage;
+	//for (int i = 0; i < 24; i++)
+	//	garbage.push_back(new Garbage());
 
-	vector <House*> yellow;
-	for (int i = 0; i < 22; i++)
-		yellow.push_back(new House("YELLOW", player3));
+	////24 Oil Objects
+	//vector <Oil*> oil;
+	//for (int i = 0; i < 24; i++)
+	//	oil.push_back(new Oil());
 
-	vector <House*> blue;
-	for (int i = 0; i < 22; i++)
-		blue.push_back(new House("BLUE", player4));
+	////24 Coal objects
+	//vector <Coal*> coal;
+	//for (int i = 0; i < 24; i++)
+	//	coal.push_back(new Coal());
 
-	cout << "-------------------------------Part 3 & 4---------------------------------" << endl;
-	//Setting houses on the game map
-	map->setHouse(miami, red[0]);
-	map->setHouse(ny, green[0]);
-	map->setHouse(philly, yellow[0]);
-	map->setHouse(memphis, green[0]);
-	map->setHouse(boston, blue[0]);
 
-	//Displays Player Information: Cities Controlled, Money, and Resources
-	cout << player1->showInformation() << endl;
-	cout << player2->showInformation() << endl;
-	cout << player3->showInformation() << endl;
-	cout << player4->showInformation() << endl;
+	///* Creating Player House Objects*/
+	//vector <House*> black;
+	//for (int i = 0; i < 22; i++)
+	//	black.push_back(new House("BLACK"));
 
-//	///*:------------------------------Part 5------------------------------------*/
-//	//				//PowerPlants - Step 3 - Summary Cards
-//
-//	//cout << "-------------------------------Part 5------------------------------------" << endl;
-//	///*Creating 6 Summary cards*/
-//	//SummaryCards sum;
-//	//SummaryCards sum2;
-//	//SummaryCards sum3;
-//	//SummaryCards sum4;
-//	//SummaryCards sum5;
-//	//SummaryCards sum6;
-//
-//	////Display a summary card
-//	//cout << sum.getDescription() << endl;
-//
-//
+	//vector <House*> purple;
+	//for (int i = 0; i < 22; i++)
+	//	purple.push_back(new House("PURPLE"));
+
+
+	///*:------------------------------Part 4------------------------------------*/
+	//							//Player Objects
+
+	///*Creating Players*/
+	//Player* player1 = new Player(1, "Trevor", wallet1, "ReD");
+	//Player* player2 = new Player(2, "Stephen", wallet2, "GREEN");
+	//Player* player3 = new Player(3, "Avnish", wallet3, "YELLOW");
+	//Player* player4 = new Player(4, "Wenbo", wallet4, "BLUE");
+
+	///*Shows you can set player to map*/
+	////map->setPlayer(city2, player1);
+	////map->setPlayer(city2, player2);
+
+	///*Sets resources to players*/
+	//uranium[0]->setOwner(player1);
+	//uranium[1]->setOwner(player2);
+	//uranium[2]->setOwner(player3);
+	//garbage[0]->setOwner(player4);
+
+
+	///*Creating the rest of the house Objects*/
+	//vector <House*> red;
+	//for (int i = 0; i < 22; i++)
+	//	red.push_back(new House("RED", player1));
+
+	//vector <House*> green;
+	//for (int i = 0; i < 1; i++)
+	//	green.push_back(new House("GREEN", player2));
+
+	//vector <House*> yellow;
+	//for (int i = 0; i < 22; i++)
+	//	yellow.push_back(new House("YELLOW", player3));
+
+	//vector <House*> blue;
+	//for (int i = 0; i < 22; i++)
+	//	blue.push_back(new House("BLUE", player4));
+
+	//cout << "-------------------------------Part 3 & 4---------------------------------" << endl;
+	////Setting houses on the game map
+	//map->setHouse(miami, red[0]);
+	//map->setHouse(ny, green[0]);
+	//map->setHouse(philly, yellow[0]);
+	//map->setHouse(memphis, yellow[0]);
+	//map->setHouse(boston, blue[0]);
+
+	////Displays Player Information: Cities Controlled, Money, and Resources
+	//cout << player1->showInformation() << endl;
+	//cout << player2->showInformation() << endl;
+	//cout << player3->showInformation() << endl;
+	//cout << player4->showInformation() << endl;
+
+	///*:------------------------------Part 5------------------------------------*/
+	//				//PowerPlants - Step 3 - Summary Cards
+
+	//cout << "-------------------------------Part 5------------------------------------" << endl;
+	///*Creating 6 Summary cards*/
+	//SummaryCards sum;
+	//SummaryCards sum2;
+	//SummaryCards sum3;
+	//SummaryCards sum4;
+	//SummaryCards sum5;
+	//SummaryCards sum6;
+
+	////Display a summary card
+	//cout << sum.getDescription() << endl;
+
+
 	/* Creating 42 Power Plant Cards + Step 3 Card */
 	Cards step3(0, "", 0, 0, "Step3"); //step 2
 
@@ -274,7 +274,7 @@ int main() {
 	deck->addCard(ppc8);
 	deck->addCard(ppc9);
 	deck->addCard(ppc10);
-		/*deck.addCard(ppc11);
+	/*	deck.addCard(ppc11);
 		deck.addCard(ppc12);
 		deck.addCard(ppc13);
 		deck.addCard(ppc14);
@@ -309,47 +309,47 @@ int main() {
 
 
 	/*showing Deck Functions*/
-	cout << "\nDeck:          ";
-	cout << deck->showDeck();
-	//invoking shuffle method
-	deck->shuffle();
-	//showing shufffled deck
-	cout << "Shuffled Deck: ";
-	cout << deck->showDeck();
-	cout << deck->peek().getCardNum() << endl;
-	Cards card = deck->drawCard();
-	//showing shufffled deck
-	cout << "Card Drawn:    " << card.getCardNum() << endl;
-	cout << deck->showDeck();
+	//cout << "\nDeck:          ";
+	//cout << deck->showDeck();
+	////invoking shuffle method
+	//deck->shuffle();
+	////showing shufffled deck
+	//cout << "Shuffled Deck: ";
+	//cout << deck->showDeck();
+	////cout << deck.peek().getCardNum() << endl;
+	//Cards card = deck->drawCard();
+	////showing shufffled deck
+	//cout << "Card Drawn:    " << card.getCardNum() << endl;
+	//cout << deck->showDeck();
 
 
-	/*End*/
-	for (int i = 0; i < 3; i++) {
-cout << "------------------------------------------------------------------------\n" << endl;
-cout << "!~ RESOURCE MARKET ~!\n" << endl;
-		for (int i = 0; i < 8; i++) {
-
-			for (int j = 0; j < 24; j++) {
-				if (i == 0)
-					cout << " C ";
-
-				else if (i == 1 && j > 8)
-					cout << " O ";
-
-				else if (i == 2 && j > 17)
-					cout << " G ";
-				else
-					cout << "   ";
-
-				if ((j + 1) % 3 == 0)
-					cout << "  ";
-				
-			}
-			cout << endl;
-			
-		}
-		cout << endl;
-	}
+	///*End*/
+	//for (int i = 0; i < 3; i++) {
+//cout << "------------------------------------------------------------------------\n" << endl;
+//cout << "!~ RESOURCE MARKET ~!\n" << endl;
+//		for (int i = 0; i < 8; i++) {
+//
+//			for (int j = 0; j < 24; j++) {
+//				if (i == 0)
+//					cout << " C ";
+//
+//				else if (i == 1 && j > 8)
+//					cout << " O ";
+//
+//				else if (i == 2 && j > 17)
+//					cout << " G ";
+//				else
+//					cout << "   ";
+//
+//				if ((j + 1) % 3 == 0)
+//					cout << "  ";
+//				
+//			}
+//			cout << endl;
+//			
+//		}
+//		cout << endl;
+	//}
 	
 	/*ResourceMarket r;
 	vector<MarketSpace*> market = r.getMarket();
@@ -358,47 +358,18 @@ cout << "!~ RESOURCE MARKET ~!\n" << endl;
 	market.at(0)->takeCoal(2);
 	cout << endl;
 	r.display(market);*/
-	cout << "Here"<<endl;
+	//cout << "Here";
 	
+	PowerPlantMarket p (deck);
+	p.display();
 
-	/*Phase4 p4;
-	p4.beginPhase4(map);*/
+	Phase4 p4;
+	p4.beginPhase4(graph);
 
-	//player order determine 
-	PlayerOrderDetermine od;
 	
-	vector<Player*> playerr;
-	playerr.push_back(player1);
-	playerr.push_back(player2);
-	playerr.push_back(player3);
-	playerr.push_back(player4);
-
-	player1->addCard(&ppc9);
-	player2->addCard(&ppc3);
-	player3->addCard(&ppc8);
-	player4->addCard(&ppc5);
-	for (int i = 0; i < playerr.size(); i++) {
-		cout << playerr.at(i)->getPlayer() << endl;
-	}
-	cout << endl;
-	//first round random shuffle
-	playerr=od.DetermineOrder(playerr);
-	for (int i = 0; i < playerr.size(); i++) {
-		cout << playerr.at(i)->getCityOwned();
-		cout << playerr.at(i)->getMaximumNumofCard()<< endl;
-	}
-	//second round sort
-	playerr=od.DetermineOrder(playerr);
-
-for (int i = 0; i < playerr.size(); i++) {
-	cout << playerr.at(i)->getCityOwned();
-	cout << playerr.at(i)->getMaximumNumofCard() << endl;
-	}
-
 	system("pause");
 	return 0;
 }
-
 
 
 

@@ -11,6 +11,7 @@
 #define House_H
 #include<string>
 #include"Player.h"
+#include"City.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ private:
 	string colour;
 	Player* player; //player object that owns the house
 	bool set;
+	int city;
 
 public:
 	House(); //Default Constructor
@@ -37,6 +39,8 @@ public:
 	Player* getOwner(); //Getter for owner of a house
 	void setColour(string colour); //Setter for house colour
 	string getColour(); //Getter for house colour
+	void setCity(int city);
+	int getCityId();
 	
 };
 

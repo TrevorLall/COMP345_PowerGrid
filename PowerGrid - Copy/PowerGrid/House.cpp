@@ -8,6 +8,7 @@
 
 #include "House.h"
 #include<string>
+#include"City.h"
 #include<algorithm>
 
 namespace upper
@@ -31,6 +32,7 @@ House::House() {
 	colour = "";
 	player = NULL;
 	set == false;
+	city = -1;
 }
 
 //House Constructor
@@ -46,6 +48,8 @@ House::House(string color, Player* newPlayer) {
 	if ( to_upper(color) == to_upper(s)) {
 		colour = color;
 		player = newPlayer;
+		set == false;
+		city = -1;
 	}
 	else {
 		cout << "Error in creating house. Player Doesn't match house colour" << endl;
@@ -82,5 +86,19 @@ void House::setColour(string color){
 string House::getColour(){
 	return colour;
 }
+
+void House::setCity(int c){
+	city = c;
+}
+
+int House::getCityId()
+{
+	return city;
+}
+
+
+
+
+
 
 

@@ -157,3 +157,7 @@ string ResourceMarket::display(vector<MarketSpace*> market){
 	cout << "------------------------------------------------------------------------\n" << endl;
 	return"";
 }
+
+bool isFull() {
+	return true;
+}

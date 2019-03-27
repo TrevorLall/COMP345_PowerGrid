@@ -71,11 +71,33 @@ void City::setHouse(House* houses) {
 		player->cityOwned.push_back(getName()); //adds the city name to list of controlled cities for player
 		cout << house->getOwner()->getPlayer() << " set a house in " << getName() << endl; // output that player set a house
 		setFull(true); //sets city to being occupied
+		houses->setTrue();
 	}
 	else {
 		cout << "City is already Full" << endl;
 	}
 }
+
+
+//Sets house to a city
+void City::setHouse(House* houses, int id) {
+	//if city isn't full, set the house
+	if (getFull() == false) {
+		house = houses;
+		player = house->getOwner(); //sets city owner to owner of house
+		houses->setCity(id);
+		player->cityOwned.push_back(getName()); //adds the city name to list of controlled cities for player
+		cout << house->getOwner()->getPlayer() << " spent 10 Elektro to set a house in " << getName() << endl; // output that player set a house
+		setFull(true); //sets city to being occupied
+		houses->setTrue();
+	}
+	else {
+		cout << "City is already Full" << endl;
+	}
+}
+
+
+
 
 
 

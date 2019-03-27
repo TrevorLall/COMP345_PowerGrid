@@ -41,13 +41,11 @@ public:
 	Elektro* getElektro(); //gets the player money
 	vector<string> cityOwned;//City cityOwned;
 	string getPlayerColour();
+	int getCityOwned();
+	int getMaximumNumofCard();
 	vector<House*> getHouse();
 
 	vector<Cards*> getCards();
-
-	int getCityOwned();
-	int getMaximumNumofCard();
-	
 
 	vector<string> uranium;//player controlled uranium objects
 	vector<string> oil; //player controlled oil objects
@@ -55,8 +53,11 @@ public:
 	vector<string> coal; //players controlled coal objects
 
 	string showCityOwned(); //Shows the controlled cities
+	int getCityOwnSize();
 	string showCards();
 	string showInformation(); //shows all player information
+
+	void addResource(string res, int num);
 
 private:
 	string name; //player name

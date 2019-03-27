@@ -17,10 +17,13 @@ class AdjListNode
 private:
 	City* data; // store City pointer as data
 	AdjListNode *next; // pointer to next city
+	int connectionCost;
 
 public:
 	static AdjListNode* newAdjListNode(City& data); //Create new node for city
+	static AdjListNode * newAdjListNode(City & data, int cost);
 	void setNext(AdjListNode *head); //sets the next City to head of the list
+	int getCost();
 	AdjListNode* getNext(); // gets next city
 	City* getData(); // get city data
 

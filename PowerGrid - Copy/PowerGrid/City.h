@@ -41,6 +41,8 @@ public:
 	void setPlayer(Player* owner); //sets player that owns city
 	void setHouse(House* house); //sets house on city
 
+	void setHouse(House * houses, int id);
+
 	//Getters
 	int getId(); //Gets ID number
 	int getCost(); //gets cost
