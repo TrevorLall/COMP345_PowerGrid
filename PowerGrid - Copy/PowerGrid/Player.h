@@ -47,6 +47,7 @@ public:
 
 	int getCityOwned();
 	int getMaximumNumofCard();
+	
 
 	vector<string> uranium;//player controlled uranium objects
 	vector<string> oil; //player controlled oil objects

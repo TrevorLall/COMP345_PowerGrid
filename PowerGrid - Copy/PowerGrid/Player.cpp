@@ -34,7 +34,7 @@ void Player::setPlayer(string Pname){
 
 //set the players money
 void Player::setElektro(int money_spent) {
-	elektro->setAmount(money_spent);
+	elektro->setPlayerMoney(money_spent);
 }
 
 void Player::setColour(string colours){
@@ -67,7 +67,7 @@ string Player::showCityOwned() {
 string Player::showCards() {
 	cout << "Cards: ";
 	for (int i = 0; i < cards.size(); i++) {
-		cout << cards.at(i)->getCardNum() << ": "<< cards.at(i)->getCardNum() << "("<< cards.at(i)->getPowerNum() << ", " << cards.at(i)->getResourceNum() << ") -> ";
+		cout << cards.at(i)->getCardType() << ": "<< cards.at(i)->getCardNum() << "("<< cards.at(i)->getResType() << ", " << cards.at(i)->getResourceNum() << ") -> ";
 	}
 	return "\n";
 
@@ -80,12 +80,12 @@ string Player::showInformation() {
 
 	//Output for cities owned
 	showCityOwned();
-
+	cout << endl;
 	//Output for cities owned
 	showCards();
 
 	//output for Money
-	cout << "\nElektro: " << getElektro()->getAmount() << endl ;
+	cout << "\nElektro: " << getElektro()->getPlayerMoney() << endl ;
 	
 	//Outout for Resources
 	cout << 
@@ -101,17 +101,25 @@ string Player::showInformation() {
 
 
 //Getters
-string Player::getPlayer() { return name; } //gets player name
-int Player::getPlayerNum() { return player_num; } //gets player number
-Elektro* Player::getElektro() { return elektro; } //gets Money
-vector<House*> Player:: getHouse() { return houses; }
-vector<Cards*> Player::getCards() { return cards; }
-int Player::getCityOwned(){return (int)cityOwned.size();}
-int Player::getMaximumNumofCard()
+string			Player::getPlayer() { return name; } //gets player name
+int				Player::getPlayerNum() { return player_num; } //gets player number
+Elektro*		Player::getElektro() { return elektro; } //gets Money
+vector<House*>	Player::getHouse() { return houses; }
+vector<Cards*>	Player::getCards() { return cards; }
+//add for orderdetermine
+int				Player::getCityOwned() { return (int)cityOwned.size(); }
+int				Player::getMaximumNumofCard()
 {
-	return 0;
+	int k = 0;
+	for (int i = 0; i < cards.size(); i++) {
+		if (cards.at(i)->getCardNum() > k)
+			k = cards.at(i)->getCardNum();
+	}
+	return k;
 }
-//return city size
+//
+
+
 
 string Player::getPlayerColour(){
 	return colour;
