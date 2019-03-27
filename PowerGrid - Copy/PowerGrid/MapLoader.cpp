@@ -75,7 +75,7 @@ Map* MapLoader::loadMap(ifstream& file) {
 
 			//If the city name is an actual already created city, then add connection to original city
 			if (isACity(edges.at(j + iter.at(i)))) {
-				City cityId = returnCity(edges.at(j + iter.at(i))); //Gets City Object for the original city
+				City cityId = *returnCity(edges.at(j + iter.at(i))); //Gets City Object for the original city
 				Map::addEdge(graph, *city.at(i), cityId); //Creates connection
 			}
 		}
@@ -121,14 +121,14 @@ bool MapLoader::isACity( string s)
 }
 
 //Returns a city from a given string name
-City MapLoader::returnCity(string s)
+City* MapLoader::returnCity(string s)
 {
 	//loop through city vector to find if the city name exists, and return that city
 	for (int i = 0; i < city.size(); i++)
 	{
 		if (city.at(i)->getName() == s) 
 		{
-			return *city.at(i);
+			return city.at(i);
 		}
 	}
 }

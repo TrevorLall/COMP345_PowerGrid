@@ -23,6 +23,8 @@ void PowerGrid::startGame()
 	string response;
 	string fileName;
 	ifstream file;
+	City* city1;
+	City* city2;
 	MapLoader loader = MapLoader();
 	
 
@@ -183,8 +185,8 @@ void PowerGrid::startGame()
 					cout << "city does not exist!" << endl;
 				else 
 				{
-					loader.returnCity(answer).setHouse(houseVector[i][0]);
-					gameArea.push_back(loader.returnCity(answer).getArea());
+					loader.returnCity(answer)->setHouse(houseVector[i][0]);
+					gameArea.push_back(loader.returnCity(answer)->getArea());
 				}
 					
 			} 
@@ -207,14 +209,18 @@ void PowerGrid::startGame()
 					{
 						for (int j = 0; j < i; j++)  // checks if the city entered is in an adjacent Area to any other players, if it is the players house is placed.
 						{
+							city1 = loader.returnCity(loader.returnCity(answer)->getArea());
+							city2 = loader.returnCity(loader.returnCity(players[j]->cityOwned[0])->getArea());
+
+							if (Map::checkAvailability(map, city1, city2) == false && this->isCitySame(answer) == false)
+							{
+								loader.returnCity(answer)->setHouse(houseVector[i][0]);
+								gameArea.push_back(loader.returnCity(answer)->getArea());
+								isAdj = true;
+								break;
+							}
 							
-								if (Map::checkAvailability(map, &loader.returnCity(loader.returnCity(answer).getArea()), &loader.returnCity(loader.returnCity(players[j]->cityOwned[0]).getArea())) == false)
-								{
-									loader.returnCity(answer).setHouse(houseVector[i][0]);
-									gameArea.push_back(loader.returnCity(answer).getArea());
-									isAdj = true;
-									break;
-								}
+								
 			
 						}
 
@@ -233,7 +239,7 @@ void PowerGrid::startGame()
 	// Part 4 Creation of Deck and Resources -----------------------------------------------------------------------------------------------------------------
 
 
-	//market = new ResourceMarket(); // creation of market.
+	market = new ResourceMarket(); // creation of market.
 
 	//	//powerplants
 	gameDeck = new Deck();
@@ -280,4 +286,38 @@ void PowerGrid::startGame()
 	gameDeck->addCard(Cards(46,"Hybrid", 3, 7, "powerplant"));
 	gameDeck->addCard(Cards(50,"Fusion", 0, 6, "powerplant"));
 
+}
+
+Deck * PowerGrid::getGameDeck()
+{
+	return gameDeck;
+}
+
+ResourceMarket * PowerGrid::getMarket()
+{
+	return market;
+}
+
+vector<Player*> PowerGrid::getPlayers()
+{
+	return players;
+}
+
+vector<string> PowerGrid::getGameArea()
+{
+	return gameArea;
+}
+
+bool PowerGrid::isCitySame(string cityName)
+{
+	for (int i = 0; i < players.size(); i++)
+	{
+		for(int j = 0; j < players[i]->cityOwned.size(); j++)
+		{
+			if (cityName == players[i]->cityOwned[j])
+				return true;
+		}
+	}
+
+	return false;
 }

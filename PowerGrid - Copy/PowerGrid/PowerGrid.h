@@ -29,6 +29,11 @@ public:
 	PowerGrid();
 	~PowerGrid();
 	void startGame();
+	Deck* getGameDeck();
+	ResourceMarket* getMarket();
+	vector <Player*> getPlayers();
+	vector <string> gameArea();
+	bool isCitySame(string cityName);
 
 
 };

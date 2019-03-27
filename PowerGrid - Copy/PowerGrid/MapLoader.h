@@ -31,5 +31,5 @@ public:
 	vector<City*> getCity();
 	
 	bool isACity(string name); //Checks if city has been created
-	City returnCity(string name); //Returns the City object of a given name
+	City* returnCity(string name); //Returns the City object of a given name
 };
