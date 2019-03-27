@@ -8,8 +8,6 @@
 
 
 #pragma once
-#ifndef MapLoader_H
-#define MapLoader_H
 #include"Map.h"
 #include"City.h"
 #include <iostream>
@@ -17,19 +15,21 @@
 #include<string>
 #include <vector>
 
+using namespace std;
+
 class MapLoader {
 
 private:
 	Map * graph; //Map created from map loader
-	std::vector<City> city; //Vector that stores cities
+	vector<City*> city; //Vector that stores cities
 
 
 public:
 	MapLoader(); //Default constructor
-	Map* loadMap(std::ifstream& file); //Loads map into a Map object
+	Map* loadMap(ifstream& file); //Loads map into a Map object
 	Map* getMap(); //returns the map to driver
+	vector<City*> getCity();
 	
 	bool isACity(string name); //Checks if city has been created
 	City returnCity(string name); //Returns the City object of a given name
 };
-#endif MapLoader_H
